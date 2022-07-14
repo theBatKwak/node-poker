@@ -1,5 +1,5 @@
-import { Hand } from "../../models/Hand";
-import { PokerRule, RuleResult } from "../Referee.service";
+import { Hand } from '../../models/Hand'
+import { RuleResult } from '../Referee.service'
 
 export class HighestCardRule {
     public static apply(hands: Hand[]): RuleResult {

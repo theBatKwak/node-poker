@@ -1,6 +1,6 @@
 import { Card } from '../../models/Card'
 import { Hand } from '../../models/Hand'
-import { PokerRule, RuleResult } from '../Referee.service'
+import { RuleResult } from '../Referee.service'
 import { HighestCardRule } from './HighestCardRule.service'
 
 export class PairsRule {

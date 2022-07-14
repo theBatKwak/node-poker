@@ -3,6 +3,7 @@ import { Hand } from '../models/Hand'
 import { Player } from '../models/Player'
 import { HighestCardRule } from './rules/HighestCardRule.service'
 import { PairsRule } from './rules/PairsRule.service'
+import { NewRuleResult, PokerRule } from './rules/PokerRule.service'
 
 export interface TurnResult {
     winner: Player | undefined
@@ -12,10 +13,6 @@ export interface TurnResult {
 export interface RuleResult {
     winnerHand: Hand | null
     value: string | number
-}
-
-export interface PokerRule {
-    apply: (hands: Hand[], commonCards?: Card[]) => RuleResult
 }
 
 export class Referee {
@@ -33,23 +30,14 @@ export class Referee {
     }
     public getWinnerHand(): TurnResult {
         const hands: Hand[] = this.players.map((player: Player) => player.hand)
-        const pairsWinnerHand: RuleResult = PairsRule.apply(hands, this.commonCards)
-        if (pairsWinnerHand && pairsWinnerHand.winnerHand) {
+        const turnResult: NewRuleResult = PokerRule.apply(hands, this.commonCards)
+        if (turnResult.winnerHand && turnResult.value) {
             return {
-                winner: this.getWinnerPlayerFromHand(pairsWinnerHand.winnerHand),
-                reason: 'Pair of ' + pairsWinnerHand.value
+                winner: this.getWinnerPlayerFromHand(turnResult.winnerHand),
+                reason: turnResult.reason + turnResult.value.toString()
             }
-        }
-        const highestCardWinner: RuleResult = HighestCardRule.apply(hands)
-        if (highestCardWinner.winnerHand) {
-            return {
-                winner: this.getWinnerPlayerFromHand(highestCardWinner.winnerHand),
-                reason: 'Highest card : ' + highestCardWinner.value
-            }
-        }
-        return {
-            winner: undefined,
-            reason: 'No one won'
+        } else {
+            throw new Error('No winner found')
         }
     }
     private getWinnerPlayerFromHand(hand: Hand): Player | undefined {

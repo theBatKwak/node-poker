@@ -12,7 +12,7 @@ export type StatsByReason = {
     'royal flush': number
 }
 export class StatsService {
-    public static byReason(turnResults: TurnResult[]): StatsByReason {
+    public static byReason(turnResults: TurnResult[], format: 'percent' | 'absolute' = 'percent'): StatsByReason {
         const result: StatsByReason = {
             'high card': 0,
             'one pair': 0,
@@ -27,8 +27,12 @@ export class StatsService {
         }
         turnResults.forEach((turnResult: TurnResult) => {
             result[turnResult.reason]++
-        }
-        )
+        })
+        if (format === 'percent') {
+            Object.keys(result).forEach((reason: string) => {
+                // @ts-ignore
+                result[reason] = (result[reason] / turnResults.length) * 100
+            })}
         return result
     }
 }

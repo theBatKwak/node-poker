@@ -20,4 +20,16 @@ export class Deck {
             throw new Error('Deck is empty')
         }
     }
+    public getFlop(): Card[] {
+        this.draw()
+        return [this.draw(), this.draw(), this.draw()]
+    }
+    public getTurn(): Card[] {
+        this.draw()
+        return [this.draw()]
+    }
+    public getRiver(): Card[] {
+        this.draw()
+        return [this.draw()]
+    }
 }

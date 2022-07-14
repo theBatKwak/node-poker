@@ -11,4 +11,10 @@ export class Hand {
     public getScore(): number {
         return this.cards.reduce((acc, card) => acc + card.value, 0)
     }
+    public getHighestCard(): Card {
+        return this.cards.sort((a, b) => b.value - a.value)[0]
+    }
+    public getSecondHighestCard(): Card {
+        return this.cards.sort((a, b) => b.value - a.value)[1]
+    }
 }

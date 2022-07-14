@@ -1,14 +1,12 @@
 import { Card } from '../models/Card'
 import { Hand } from '../models/Hand'
 import { Player } from '../models/Player'
-import { HighestCardRule } from './rules/HighestCardRule.service'
-import { PairsRule } from './rules/PairsRule.service'
 import { NewRuleResult, PokerRule } from './rules/PokerRule.service'
 
 export interface TurnResult {
     winner: Player | undefined
     loosers: Player[]
-    reason: string,
+    reason: 'high card' | 'one pair' | 'two pairs' | 'three of a kind' | 'straight' | 'flush' | 'full house' | 'four of a kind' | 'straight flush' | 'royal flush',
     value: number
 }
 
@@ -30,7 +28,7 @@ export class Referee {
         this.players = players
         this.commonCards = commonCards
     }
-    public getWinnerHand(): TurnResult {
+    public getGameResults(): TurnResult {
         const hands: Hand[] = this.players.map((player: Player) => player.hand)
         const turnResult: NewRuleResult = PokerRule.apply(hands, this.commonCards)
         if (turnResult.winnerHand && turnResult.value) {

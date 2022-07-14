@@ -26,6 +26,6 @@ export class GameController {
     }
     public generateGameResults(): TurnResult {
         const referee = new Referee(this.players, this.commonCards)
-        return referee.getWinnerHand()
+        return referee.getGameResults()
     }
 }

@@ -4,7 +4,7 @@ import { RuleResult } from "../Referee.service";
 
 export type NewRuleResult = {
     winnerHand: Hand | null,
-    reason: 'royal flush' | 'straight flush' | 'four of a kind' | 'full house' | 'flush' | 'straight' | 'three of a kind' | 'two pairs' | 'one pair' | 'high card' | '',
+    reason: 'royal flush' | 'straight flush' | 'four of a kind' | 'full house' | 'flush' | 'straight' | 'three of a kind' | 'two pairs' | 'one pair' | 'high card',
     value: number
 }
 
@@ -18,15 +18,14 @@ const handsRanks = {
     'three of a kind': 4,
     'two pairs': 3,
     'one pair': 2,
-    'high card': 1,
-    '': 0
+    'high card': 1
 }
 
 export class PokerRule {
     public static apply(hands: Hand[], commonCards: Card[]): NewRuleResult {
         let bestHand: NewRuleResult = {
             winnerHand: null,
-            reason: '',
+            reason: 'high card',
             value: 0
         }
         hands.forEach((hand: Hand) => {

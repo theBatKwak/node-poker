@@ -7,7 +7,9 @@ import { NewRuleResult, PokerRule } from './rules/PokerRule.service'
 
 export interface TurnResult {
     winner: Player | undefined
-    reason: string
+    loosers: Player[]
+    reason: string,
+    value: number
 }
 
 export interface RuleResult {
@@ -34,7 +36,9 @@ export class Referee {
         if (turnResult.winnerHand && turnResult.value) {
             return {
                 winner: this.getWinnerPlayerFromHand(turnResult.winnerHand),
-                reason: turnResult.reason + turnResult.value.toString()
+                reason: turnResult.reason,
+                value: turnResult.value,
+                loosers: this.getLoosersPlayersFromWinnerHand(turnResult.winnerHand),
             }
         } else {
             throw new Error('No winner found')
@@ -42,5 +46,8 @@ export class Referee {
     }
     private getWinnerPlayerFromHand(hand: Hand): Player | undefined {
         return this.players.find((player: Player) => player.hand === hand)
+    }
+    private getLoosersPlayersFromWinnerHand(winnerHand: Hand): Player[] {
+        return this.players.filter((player: Player) => player.hand !== winnerHand)
     }
 }

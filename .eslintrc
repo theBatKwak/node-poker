@@ -1,0 +1,29 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:vue/vue3-recommended",
+    "eslint:recommended",
+    "@vue/typescript/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021
+  },
+  "plugins": [],
+  "rules": {
+    "vue/max-attributes-per-line": [
+      2,
+      {
+        "singleline": 20,
+        "multiline": {
+          "max": 1,
+          "allowFirstLine": false
+        }
+      }
+    ]
+  }
+}

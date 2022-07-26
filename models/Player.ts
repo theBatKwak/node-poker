@@ -20,7 +20,6 @@ export class Player {
   public play(commonCards: Card[]): PlayerMove {
     // do something
     const move = AIService.play(commonCards, this.hand)
-    console.log(this.name, move)
 
     if (move === 'fold') {
       this.status = 'folded'

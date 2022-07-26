@@ -27,6 +27,8 @@ export class GameController {
     this.commonCards = [...this.deck.getFlop(), ...this.deck.getTurn(), ...this.deck.getRiver()]
   }
   public generateGameResults(): TurnResult {
+    console.log('GENERATE : ', this.players.length, this.foldedPlayers.length)
+
     if (this.gameState === 'showdown') {
       console.log('🃏 Final hands are counting')
 
@@ -47,25 +49,21 @@ export class GameController {
     this.playRound()
     // flop
     this.gameState = 'flop'
-    console.log('flop')
     this.commonCards = [...this.deck.getFlop()]
     this.playRound()
-    if (this.gameState === 'finished') return this.generateGameResults()
+    if (this.gameState === 'finished' || this.players.length <= 2) return this.generateGameResults()
     // turn
     this.gameState = 'turn'
-    console.log('turn')
     this.commonCards = [...this.commonCards, ...this.deck.getTurn()]
     this.playRound()
-    if (this.gameState === 'finished') return this.generateGameResults()
+    if (this.gameState === 'finished' || this.players.length <= 2) return this.generateGameResults()
     // river
     this.gameState = 'river'
-    console.log('river')
     this.commonCards = [...this.commonCards, ...this.deck.getRiver()]
     this.playRound()
-    if (this.gameState === 'finished') return this.generateGameResults()
+    if (this.gameState === 'finished' || this.players.length <= 2) return this.generateGameResults()
     // showdown
     this.gameState = 'showdown'
-    console.log('showdown')
     return this.generateGameResults()
   }
   private playRound(): void {
@@ -88,7 +86,6 @@ export class GameController {
   }
   private endGame(): void {
     // do something
-    console.log('STOP')
     this.gameState = 'finished'
   }
 }

@@ -5,9 +5,6 @@ import { Hand } from './Hand'
 export type PlayerStatus = 'active' | 'folded' | 'all-in' | 'out'
 
 export type PlayerMove = 'fold' | 'raise'
-
-type NewType = PlayerMove
-
 export class Player {
   public name: String
   public hand: Hand

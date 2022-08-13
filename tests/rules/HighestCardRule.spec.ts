@@ -1,18 +1,18 @@
-import { Card } from "../../models/Card"
-import { Hand } from "../../models/Hand"
-import { HighestCardRule } from "../../services/rules/HighestCardRule.service"
+import { Card } from '../../models/Card'
+import { HighCardRule } from '../../services/rules/HighCardRule.service'
 
 describe('HighestCardRule', () => {
-    it('should return the hand with highest card', () => {
-        const winnerHand = new Hand([new Card('hearts', '5', 5), new Card('spades', '3', 3)])
-        const looserHand = new Hand([new Card('hearts', '2', 2), new Card('spades', '3', 3)])
-        const result = HighestCardRule.apply([winnerHand, looserHand])
-        expect(result.winnerHand).toBe(winnerHand)
-    })
-    it('should return the hand with the second highest card when first ones are equals', () => {
-        const winnerHand = new Hand([new Card('hearts', '5', 5), new Card('spades', '4', 4)])
-        const looserHand = new Hand([new Card('hearts', '5', 5), new Card('spades', '3', 3)])
-        const result = HighestCardRule.apply([winnerHand, looserHand])
-        expect(result.winnerHand).toBe(winnerHand)
-    })
+  it('should return false if no cards are provided', () => {
+    const highCardRule = new HighCardRule()
+    const result = highCardRule.is([])
+    expect(result).toBe(false)
+  })
+  it('should return the highest card', () => {
+    const highCardRule = new HighCardRule()
+    const cards = [new Card('clubs', '2', 2), new Card('hearts', '10', 10), new Card('diamonds', '7', 7)].sort(
+      (a: Card, b: Card) => b.value - a.value
+    )
+    const result = highCardRule.is(cards)
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 7 })
+  })
 })

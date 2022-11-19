@@ -28,7 +28,7 @@ describe('ThreeOfAKindRule', () => {
       new Card('diamonds', '9', 9)
     ]
     const result = threeOfAKindRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9 })
   })
   it('should return a three of a kind with 5 cards provided', () => {
     const threeOfAKindRule = new ThreeOfAKindRule()
@@ -40,7 +40,7 @@ describe('ThreeOfAKindRule', () => {
       new Card('diamonds', '7', 7)
     ]
     const result = threeOfAKindRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9, sideKick: 7 })
   })
   it('should return a three of a kind with 6 cards provided', () => {
     const threeOfAKindRule = new ThreeOfAKindRule()
@@ -53,7 +53,7 @@ describe('ThreeOfAKindRule', () => {
       new Card('diamonds', '8', 8)
     ]
     const result = threeOfAKindRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9, sideKick: 8 })
   })
   it('should return a three of a kind with 7 cards provided', () => {
     const threeOfAKindRule = new ThreeOfAKindRule()
@@ -67,7 +67,7 @@ describe('ThreeOfAKindRule', () => {
       new Card('diamonds', '9', 9)
     ]
     const result = threeOfAKindRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9, sideKick: 9 })
   })
   it('should return false with 3 cards provided and no three of a kind', () => {
     const threeOfAKindRule = new ThreeOfAKindRule()

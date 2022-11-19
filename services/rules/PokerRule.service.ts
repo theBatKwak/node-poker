@@ -112,10 +112,13 @@ export class PokerRule {
     if (flatCards.length >= 3) {
       const isThreeOfAKind = this.threeOfAKindRule.is(flatCards)
       if (isThreeOfAKind) {
-        return {
+        const result: PokerRuleResult = {
           value: isThreeOfAKind.value,
           reason: 'three of a kind'
         }
+        if (isThreeOfAKind.secondValue) result.secondValue = isThreeOfAKind.secondValue
+        if (isThreeOfAKind.sideKick) result.sideKick = isThreeOfAKind.sideKick
+        return result
       }
     }
     if (flatCards.length >= 4) {

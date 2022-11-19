@@ -28,6 +28,11 @@ export class ScoreService {
       case 'straight':
         value = this.getStringFromValue(ruleResult.value)
         return parseInt(4 + value + '00000000')
+      case 'three of a kind':
+        value = this.getStringFromValue(ruleResult.value)
+        secondValue = ruleResult.secondValue ? this.getStringFromValue(ruleResult.secondValue) : '00'
+        sideKick = ruleResult.sideKick ? this.getStringFromValue(ruleResult.sideKick) : '00'
+        return parseInt(3 + value + value + value + secondValue + sideKick)
     }
     return 0
   }

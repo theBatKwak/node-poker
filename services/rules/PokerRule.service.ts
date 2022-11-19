@@ -147,11 +147,13 @@ export class PokerRule {
     }
     const highCard = this.highCardRule.is(flatCards)
     if (highCard) {
-      return {
+      const result: PokerRuleResult = {
         value: highCard.value,
         secondValue: highCard.secondValue,
         reason: 'high card'
       }
+      if (highCard.sideKick) result.sideKick = highCard.sideKick
+      return result
     }
     return { value: 0, reason: 'no rule' }
   }

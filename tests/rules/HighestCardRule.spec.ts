@@ -13,6 +13,6 @@ describe('HighestCardRule', () => {
       (a: Card, b: Card) => b.value - a.value
     )
     const result = highCardRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 7 })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 7, sideKick: 2 })
   })
 })

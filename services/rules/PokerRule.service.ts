@@ -74,10 +74,12 @@ export class PokerRule {
     if (flatCards.length >= 4) {
       const isFourOfAKind = this.fourOfAKindRule.is(flatCards)
       if (isFourOfAKind) {
-        return {
+        const result: PokerRuleResult = {
           value: isFourOfAKind.value,
           reason: 'four of a kind'
         }
+        if (isFourOfAKind.secondValue) result.secondValue = isFourOfAKind.secondValue
+        return result
       }
     }
     if (flatCards.length >= 5) {

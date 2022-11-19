@@ -21,7 +21,7 @@ describe('PokerRule', () => {
     const cards = [new Card('clubs', '10', 10), new Card('clubs', 'J', 11)]
     const commonCards = [new Card('hearts', '10', 10), new Card('spades', '10', 10), new Card('diamonds', '10', 10)]
     const result = pokerRule.have(cards, commonCards)
-    expect(result).toStrictEqual({ value: 10, reason: 'four of a kind' })
+    expect(result).toStrictEqual({ value: 10, reason: 'four of a kind', secondValue: 11 })
   })
   it('should detect a full house', () => {
     const pokerRule = new PokerRule()

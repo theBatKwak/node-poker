@@ -63,7 +63,7 @@ describe('PokerRule', () => {
     const cards = [new Card('clubs', 'Q', 12), new Card('hearts', 'J', 11)]
     const commonCards = [new Card('spades', 'Q', 12), new Card('diamonds', '10', 10), new Card('clubs', '9', 9)]
     const result = pokerRule.have(cards, commonCards)
-    expect(result).toStrictEqual({ value: 12, reason: 'one pair' })
+    expect(result).toStrictEqual({ value: 12, reason: 'one pair', secondValue: 11, sideKick: 10 })
   })
   it('should detect a high card', () => {
     const pokerRule = new PokerRule()

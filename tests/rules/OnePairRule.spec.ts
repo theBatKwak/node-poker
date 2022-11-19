@@ -25,7 +25,7 @@ describe('OnePairRule', () => {
       (a: Card, b: Card) => b.value - a.value
     )
     const result = onePairRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 8 })
   })
   it('should return one pair with 4 cards provided', () => {
     const onePairRule = new OnePairRule()
@@ -36,7 +36,7 @@ describe('OnePairRule', () => {
       new Card('diamonds', '9', 9)
     ].sort((a: Card, b: Card) => b.value - a.value)
     const result = onePairRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9, sideKick: 8 })
   })
   it('should return one pair with 5 cards provided', () => {
     const onePairRule = new OnePairRule()
@@ -48,7 +48,7 @@ describe('OnePairRule', () => {
       new Card('diamonds', '7', 7)
     ].sort((a: Card, b: Card) => b.value - a.value)
     const result = onePairRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9, sideKick: 8 })
   })
   it('should return one pair with 6 cards provided', () => {
     const onePairRule = new OnePairRule()
@@ -61,7 +61,7 @@ describe('OnePairRule', () => {
       new Card('diamonds', '8', 8)
     ].sort((a: Card, b: Card) => b.value - a.value)
     const result = onePairRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9, sideKick: 8 })
   })
   it('should return one pair with 7 cards provided', () => {
     const onePairRule = new OnePairRule()
@@ -75,7 +75,7 @@ describe('OnePairRule', () => {
       new Card('diamonds', '3', 3)
     ].sort((a: Card, b: Card) => b.value - a.value)
     const result = onePairRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9, sideKick: 8 })
   })
   it('should return false with 2 cards provided and no pair', () => {
     const onePairRule = new OnePairRule()

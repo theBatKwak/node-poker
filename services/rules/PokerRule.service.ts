@@ -136,10 +136,13 @@ export class PokerRule {
     if (flatCards.length >= 2) {
       const isOnePair = this.onePairRule.is(flatCards)
       if (isOnePair) {
-        return {
+        const result: PokerRuleResult = {
           value: isOnePair.value,
           reason: 'one pair'
         }
+        if (isOnePair.secondValue) result.secondValue = isOnePair.secondValue
+        if (isOnePair.sideKick) result.sideKick = isOnePair.sideKick
+        return result
       }
     }
     const highCard = this.highCardRule.is(flatCards)

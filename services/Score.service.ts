@@ -33,6 +33,11 @@ export class ScoreService {
         secondValue = ruleResult.secondValue ? this.getStringFromValue(ruleResult.secondValue) : '00'
         sideKick = ruleResult.sideKick ? this.getStringFromValue(ruleResult.sideKick) : '00'
         return parseInt(3 + value + value + value + secondValue + sideKick)
+      case 'two pairs':
+        value = this.getStringFromValue(ruleResult.value)
+        secondValue = ruleResult.secondValue ? this.getStringFromValue(ruleResult.secondValue) : '00'
+        sideKick = ruleResult.sideKick ? this.getStringFromValue(ruleResult.sideKick) : '00'
+        return parseInt(2 + value + value + secondValue + secondValue + sideKick)
     }
     return 0
   }

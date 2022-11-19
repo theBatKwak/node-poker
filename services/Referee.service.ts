@@ -1,7 +1,7 @@
 import { Card } from '../models/Card'
 import { Hand } from '../models/Hand'
 import { Player } from '../models/Player'
-import { NewRuleResult, PokerRule } from './rules/PokerRule.service'
+import { PokerRule, PokerRuleResult } from './rules/PokerRule.service'
 
 export interface TurnResult {
   winner: Player | undefined
@@ -41,17 +41,8 @@ export class Referee {
   }
   public getGameResults(): TurnResult {
     const hands: Hand[] = this.players.map((player: Player) => player.hand)
-    const turnResult: NewRuleResult = PokerRule.apply(hands, this.commonCards)
-    if (turnResult.winnerHand && turnResult.value) {
-      return {
-        winner: this.getWinnerPlayerFromHand(turnResult.winnerHand),
-        reason: turnResult.reason,
-        value: turnResult.value,
-        loosers: this.getLoosersPlayersFromWinnerHand(turnResult.winnerHand)
-      }
-    } else {
-      throw new Error('No winner found')
-    }
+    const pokerRule: PokerRule = new PokerRule()
+    const results: PokerRuleResult[] = hands.map((hand: Hand) => pokerRule.have(hand.cards, this.commonCards))
   }
   private getWinnerPlayerFromHand(hand: Hand): Player | undefined {
     return this.players.find((player: Player) => player.hand === hand)

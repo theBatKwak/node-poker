@@ -25,6 +25,9 @@ export class ScoreService {
         secondValue = ruleResult.secondValue ? this.getStringFromValue(ruleResult.secondValue) : '00'
         sideKick = ruleResult.sideKick ? this.getStringFromValue(ruleResult.sideKick) : '00'
         return parseInt(5 + value + secondValue + sideKick + '0000')
+      case 'straight':
+        value = this.getStringFromValue(ruleResult.value)
+        return parseInt(4 + value + '00000000')
     }
     return 0
   }

@@ -18,7 +18,9 @@ export class FlushRule implements IPokerRule {
     cards = cards.sort((a: Card, b: Card) => b.value - a.value)
     return {
       flush: cards[0].suit,
-      value: cards[0].value
+      value: cards[0].value,
+      secondValue: cards[1].value,
+      sideKick: cards[2].value
     }
   }
 }

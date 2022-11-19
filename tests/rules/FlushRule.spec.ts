@@ -23,7 +23,7 @@ describe('FlushRule', () => {
       new Card('clubs', 'J', 11)
     ]
     const result = flushRule.is(cards)
-    expect(result).toStrictEqual({ value: 14, flush: 'clubs' })
+    expect(result).toStrictEqual({ value: 14, flush: 'clubs', secondValue: 11, sideKick: 10 })
   })
   it('should return false when 5 cards with no flush cards is provided', () => {
     const flushRule = new FlushRule()
@@ -48,7 +48,7 @@ describe('FlushRule', () => {
       new Card('hearts', 'J', 11)
     ]
     const result = flushRule.is(cards)
-    expect(result).toStrictEqual({ value: 12, flush: 'clubs' })
+    expect(result).toStrictEqual({ value: 12, flush: 'clubs', secondValue: 11, sideKick: 10 })
   })
   it('should return false when 6 cards with no flush cards is provided', () => {
     const flushRule = new FlushRule()
@@ -75,7 +75,7 @@ describe('FlushRule', () => {
       new Card('hearts', 'J', 11)
     ]
     const result = flushRule.is(cards)
-    expect(result).toStrictEqual({ value: 14, flush: 'clubs' })
+    expect(result).toStrictEqual({ value: 14, flush: 'clubs', secondValue: 12, sideKick: 11 })
   })
   it('should return false when 7 cards with no flush cards is provided', () => {
     const flushRule = new FlushRule()

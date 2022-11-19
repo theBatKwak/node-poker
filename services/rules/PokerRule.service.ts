@@ -124,11 +124,13 @@ export class PokerRule {
     if (flatCards.length >= 4) {
       const isTwoPairs = this.twoPairsRule.is(flatCards)
       if (isTwoPairs) {
-        return {
+        const result: PokerRuleResult = {
           value: isTwoPairs.value,
           secondValue: isTwoPairs.secondValue,
           reason: 'two pairs'
         }
+        if (isTwoPairs.sideKick) result.sideKick = isTwoPairs.sideKick
+        return result
       }
     }
     if (flatCards.length >= 2) {

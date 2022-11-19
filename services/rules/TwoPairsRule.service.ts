@@ -11,6 +11,11 @@ export class TwoPairsRule implements IPokerRule {
     cards = cards.filter((card) => card.value !== firstPair.value)
     const secondPair = onePairRule.is(cards)
     if (!secondPair) return false
-    return { value: firstPair.value, secondValue: secondPair.value, flush: 'hearts' }
+    const leftCards = cards.filter((card) => card.value !== secondPair.value).sort((a, b) => b.value - a.value)
+    const result: RuleResult = { value: firstPair.value, secondValue: secondPair.value, flush: 'hearts' }
+    if (leftCards.length > 0) {
+      result.sideKick = leftCards[0].value
+    }
+    return result
   }
 }

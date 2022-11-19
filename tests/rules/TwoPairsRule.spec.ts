@@ -54,7 +54,7 @@ describe('TwoPairsRule', () => {
       new Card('spades', '6', 6)
     ].sort((a: Card, b: Card) => b.value - a.value)
     const result = twoPairsRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, secondValue: 8, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, secondValue: 8, flush: 'hearts', sideKick: 6 })
   })
   it('should return false if 6 cards without 2 pairs are provided', () => {
     const twoPairsRule = new TwoPairsRule()
@@ -81,7 +81,7 @@ describe('TwoPairsRule', () => {
       new Card('spades', 'A', 14)
     ].sort((a: Card, b: Card) => b.value - a.value)
     const result = twoPairsRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, secondValue: 8, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, secondValue: 8, flush: 'hearts', sideKick: 14 })
   })
   it('should return 2 pairs with 7 cards provided with 2 pairs', () => {
     const twoPairsRule = new TwoPairsRule()
@@ -95,6 +95,6 @@ describe('TwoPairsRule', () => {
       new Card('spades', 'A', 14)
     ].sort((a: Card, b: Card) => b.value - a.value)
     const result = twoPairsRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, secondValue: 8, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, secondValue: 8, flush: 'hearts', sideKick: 14 })
   })
 })

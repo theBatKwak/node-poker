@@ -13,8 +13,21 @@ export type PokerRuleResult = {
   secondValue?: number
   sideKick?: number
   flush?: 'hearts' | 'spades' | 'diamonds' | 'clubs'
-  reason: string
+  reason: PokerRuleReason
 }
+
+export type PokerRuleReason =
+  | 'high card'
+  | 'one pair'
+  | 'two pairs'
+  | 'three of a kind'
+  | 'straight'
+  | 'flush'
+  | 'full house'
+  | 'four of a kind'
+  | 'straight flush'
+  | 'royal flush'
+  | 'no rule'
 
 export class PokerRule {
   private onePairRule: OnePairRule
@@ -36,6 +49,7 @@ export class PokerRule {
     this.fullHouseRule = new FullHouseRule()
     this.highCardRule = new HighCardRule()
   }
+
   public have(cards: Card[], commonCards: Card[]): PokerRuleResult {
     const flatCards = [...cards, ...commonCards].sort((a: Card, b: Card) => b.value - a.value)
     if (flatCards.length >= 5) {
@@ -115,7 +129,7 @@ export class PokerRule {
       if (isOnePair) {
         return {
           value: isOnePair.value,
-          reason: 'pair'
+          reason: 'one pair'
         }
       }
     }

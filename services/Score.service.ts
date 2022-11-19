@@ -5,6 +5,7 @@ export class ScoreService {
   public static getScore(ruleResult: PokerRuleResult, userCards: Card[], commonCards: Card[]): number {
     let value = '0'
     let secondValue = '00'
+    let sideKick = '00'
     switch (ruleResult.reason) {
       case 'royal flush':
         return 81400000000
@@ -19,6 +20,11 @@ export class ScoreService {
         value = this.getStringFromValue(ruleResult.value)
         secondValue = ruleResult.secondValue ? this.getStringFromValue(ruleResult.secondValue) : '00'
         return parseInt(6 + value + value + value + secondValue + secondValue)
+      case 'flush':
+        value = this.getStringFromValue(ruleResult.value)
+        secondValue = ruleResult.secondValue ? this.getStringFromValue(ruleResult.secondValue) : '00'
+        sideKick = ruleResult.sideKick ? this.getStringFromValue(ruleResult.sideKick) : '00'
+        return parseInt(5 + value + secondValue + sideKick + '0000')
     }
     return 0
   }

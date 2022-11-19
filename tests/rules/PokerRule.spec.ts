@@ -35,7 +35,7 @@ describe('PokerRule', () => {
     const cards = [new Card('clubs', 'A', 14), new Card('clubs', 'J', 11)]
     const commonCards = [new Card('clubs', '3', 3), new Card('clubs', '2', 2), new Card('clubs', '10', 10)]
     const result = pokerRule.have(cards, commonCards)
-    expect(result).toStrictEqual({ value: 14, reason: 'flush', flush: 'clubs' })
+    expect(result).toStrictEqual({ value: 14, reason: 'flush', flush: 'clubs', secondValue: 11, sideKick: 10 })
   })
   it('should detect a straight', () => {
     const pokerRule = new PokerRule()

@@ -95,6 +95,8 @@ export class PokerRule {
       if (isFlush) {
         return {
           value: isFlush.value,
+          secondValue: isFlush.secondValue,
+          sideKick: isFlush.sideKick,
           reason: 'flush',
           flush: isFlush.flush
         }

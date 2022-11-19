@@ -11,7 +11,15 @@ export class FourOfAKindRule implements IPokerRule {
         cards[i].value === cards[i + 2].value &&
         cards[i].value === cards[i + 3].value
       ) {
-        return { value: cards[i].value, flush: 'hearts' }
+        const result: RuleResult = {
+          value: cards[i].value,
+          flush: 'hearts'
+        }
+        if (cards.length > 4) {
+          const leftCards = cards.filter((card) => card.value !== result.value).sort((a, b) => b.value - a.value)
+          result.secondValue = leftCards[0].value
+        }
+        return result
       }
     }
     return false

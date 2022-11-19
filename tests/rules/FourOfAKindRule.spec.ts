@@ -34,7 +34,7 @@ describe('FourOfAKindRule', () => {
       new Card('diamonds', '7', 7)
     ]
     const result = fourOfAKindRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 7 })
   })
   it('should return a four of a kind with 6 cards provided', () => {
     const fourOfAKindRule = new FourOfAKindRule()
@@ -47,7 +47,7 @@ describe('FourOfAKindRule', () => {
       new Card('diamonds', '8', 8)
     ]
     const result = fourOfAKindRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 8 })
   })
   it('should return a four of a kind with 7 cards provided', () => {
     const fourOfAKindRule = new FourOfAKindRule()
@@ -61,7 +61,7 @@ describe('FourOfAKindRule', () => {
       new Card('diamonds', '9', 9)
     ]
     const result = fourOfAKindRule.is(cards)
-    expect(result).toStrictEqual({ value: 10, flush: 'hearts' })
+    expect(result).toStrictEqual({ value: 10, flush: 'hearts', secondValue: 9 })
   })
   it('should return false with 4 cards provided and no four of a kind', () => {
     const fourOfAKindRule = new FourOfAKindRule()

@@ -25,6 +25,8 @@ export class ScoreService {
         return parseInt(2 + value + value + secondValue + secondValue + sideKick)
       case 'one pair':
         return parseInt(1 + value + value + secondValue + sideKick + '00')
+      case 'high card':
+        return parseInt(0 + value + secondValue + sideKick + '0000')
     }
     return 0
   }

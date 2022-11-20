@@ -1,18 +1,9 @@
-import { GameController } from './controllers/GameController'
-import { NewGameController } from './controllers/NewGameController'
+import { AIService } from './services/AI/AI.service'
+import { AIController } from './controllers/AIController'
 import { MetaGameController } from './controllers/MetaGameController'
-import { StatsService } from './services/stats/Stats.service'
 
-// console.log(deck.cards)
+const aiController: AIController = new AIController(new AIService())
+const metaGameController: MetaGameController = new MetaGameController(aiController)
+metaGameController.playNGames()
 
-/* const startTS = Date.now()
-const metaGameController = new MetaGameController(10000, 8)
-const results = metaGameController.run()
-const endTS = Date.now()
-const total = endTS - startTS
-console.log(`Total time: ${total}ms`)
-console.log(StatsService.byReason(results, 'percent'))
- */
-const gameController = new NewGameController(2)
-gameController.playGame()
 console.log('✅')

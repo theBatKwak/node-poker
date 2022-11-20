@@ -1,20 +1,14 @@
 import { GameController } from './GameController'
 import { TurnResult } from '../services/Referee.service'
+import { IMetaGameController } from '../interfaces/IMetaGameController'
+import { AIController } from './AIController'
+import { AIService } from '../services/AI/AI.service'
 
-export class MetaGameController {
-  private nGames: number
-  private nPlayers: number
-  constructor(nGames: number, nPlayers: number) {
-    this.nGames = nGames
-    this.nPlayers = nPlayers
-  }
-  public run(): TurnResult[] {
-    const gamesResults: TurnResult[] = []
-    for (let i = 0; i < this.nGames; i++) {
-      console.log(`Game ${i}`)
-      const game = new GameController(this.nPlayers)
-      gamesResults.push(game.playGame())
+export class MetaGameController implements IMetaGameController {
+  constructor(readonly AI: AIController) {}
+  public playNGames(count: number = 1): void {
+    for (let i = 0; i <= count; i++) {
+      new GameController(2, this.AI).playGame()
     }
-    return gamesResults
   }
 }

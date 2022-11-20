@@ -1,6 +1,7 @@
 import { AIService } from '../services/AI/AI.service'
 import { Card } from './Card'
 import { Hand } from './Hand'
+import { AIController } from '../controllers/AIController'
 
 export type PlayerStatus = 'active' | 'folded' | 'all-in' | 'out'
 
@@ -9,17 +10,15 @@ export class Player {
   public name: String
   public hand: Hand
   public status: PlayerStatus
-  private ai: AIService
-  constructor(name: String, hand: Hand, ai: AIService) {
+  constructor(name: String, hand: Hand, readonly ai: AIController) {
     this.name = name
     this.hand = hand
     this.status = 'active'
-    this.ai = ai
     this.printPayerHand()
   }
   public play(commonCards: Card[]): PlayerMove {
     // do something
-    const move = this.ai.play(commonCards, this.hand)
+    const move = this.ai.getMove(commonCards, this.hand.cards)
     if (move === 'fold') {
       this.status = 'folded'
     }

@@ -1,91 +1,83 @@
-import { Player, PlayerMove } from '../models/Player'
 import { Card } from '../models/Card'
 import { Deck } from '../models/Deck'
 import { Hand } from '../models/Hand'
-import { TurnResult } from '../services/Referee.service'
-import { Referee } from '../services/Referee.service'
+import { Player } from '../models/Player'
+import { IGameController } from '../interfaces/IGameController'
+import { AIController } from './AIController'
 
-export type GameState = 'pre-flop' | 'flop' | 'turn' | 'river' | 'showdown' | 'finished'
+type GameState = 'pre-flop' | 'flop' | 'turn' | 'river' | 'showdown' | 'finished'
 
-export class GameController {
-  private players: Player[] = []
-  private foldedPlayers: Player[] = []
-  private earlyWinner: Player | null = null
+export class GameController implements IGameController {
+  private activePlayers: Player[]
+  private foldedPlayers: Player[]
+  private deck: Deck
   private commonCards: Card[] = []
-  private deck: Deck = new Deck()
-  public gameState: string = 'pre-flop'
-  constructor(nPlayers: number = 2) {
+  private gameState: GameState = 'pre-flop'
+  constructor(nPlayers: number = 2, readonly AIController: AIController) {
+    this.deck = new Deck()
     this.deck.shuffle()
-    if (nPlayers < 2) {
-      throw new Error('There must be at least 2 players')
-    }
+    this.foldedPlayers = []
+    this.activePlayers = []
     for (let i = 0; i < nPlayers; i++) {
-      this.players.push(new Player(`player ${i}`, new Hand([this.deck.draw(), this.deck.draw()])))
+      this.activePlayers.push(
+        new Player(`player ${i}`, new Hand([this.deck.draw(), this.deck.draw()]), this.AIController)
+      )
     }
   }
-  public generateFullCommonCards(): void {
-    this.commonCards = [...this.deck.getFlop(), ...this.deck.getTurn(), ...this.deck.getRiver()]
-  }
-  public generateGameResults(): TurnResult {
-    console.log('GENERATE : ', this.players.length, this.foldedPlayers.length)
-
-    if (this.gameState === 'showdown') {
-      console.log('🃏 Final hands are counting')
-
-      const referee = new Referee(this.players, this.commonCards)
-      return referee.getGameResults()
-    } else {
-      // if (!this.earlyWinner) throw new Error('No winner found')
-      return {
-        winner: this.earlyWinner ? this.earlyWinner : this.players[0],
-        reason: 'hidden',
-        value: 0,
-        loosers: this.foldedPlayers
-      }
+  public playGame(): void {
+    while (this.activePlayers.length > 1 && this.gameState !== 'finished') {
+      this.playRound()
+      this.generateNextRound()
     }
-  }
-  public playGame(): TurnResult {
-    // pre-flop
-    this.playRound()
-    // flop
-    this.gameState = 'flop'
-    this.commonCards = [...this.deck.getFlop()]
-    this.playRound()
-    if (this.gameState === 'finished' || this.players.length <= 2) return this.generateGameResults()
-    // turn
-    this.gameState = 'turn'
-    this.commonCards = [...this.commonCards, ...this.deck.getTurn()]
-    this.playRound()
-    if (this.gameState === 'finished' || this.players.length <= 2) return this.generateGameResults()
-    // river
-    this.gameState = 'river'
-    this.commonCards = [...this.commonCards, ...this.deck.getRiver()]
-    this.playRound()
-    if (this.gameState === 'finished' || this.players.length <= 2) return this.generateGameResults()
-    // showdown
-    this.gameState = 'showdown'
-    return this.generateGameResults()
+    this.finishGame()
   }
   private playRound(): void {
-    this.players.forEach((player: Player) => {
-      if (this.players.length === 1) {
-        this.earlyWinner = player
-        this.endGame()
-        return
-      }
-      const result: PlayerMove = player.play(this.commonCards)
-      if (result === 'fold') {
+    this.activePlayers.forEach((player) => {
+      const move = player.play(this.commonCards)
+      if (move === 'fold') {
         this.foldedPlayers.push(player)
-        if (this.players.length === 2) {
-          this.endGame()
-          return
-        }
+        this.activePlayers = this.activePlayers.filter((p) => p !== player)
       }
-      this.players = this.players.filter((p: Player) => p.isActive())
     })
   }
-  private endGame(): void {
-    // do something
+  private generateNextRound(): void {
+    switch (this.gameState) {
+      case 'pre-flop':
+        console.log('⏱ FLOP')
+        this.commonCards = [...this.deck.getFlop()]
+        this.printCommonCards()
+        this.gameState = 'flop'
+        break
+      case 'flop':
+        console.log('⏱ TURN')
+        this.commonCards = [...this.commonCards, ...this.deck.getTurn()]
+        this.printCommonCards()
+        this.gameState = 'turn'
+        break
+      case 'turn':
+        console.log('⏱ RIVER')
+        this.commonCards = [...this.commonCards, ...this.deck.getRiver()]
+        this.printCommonCards()
+        this.gameState = 'river'
+        break
+      case 'river':
+        console.log('⏱ SHOWDOWN')
+        this.gameState = 'showdown'
+        break
+      case 'showdown':
+        console.log('⏱ FINISHED')
+        this.gameState = 'finished'
+        break
+    }
+  }
+  private finishGame(): void {
     this.gameState = 'finished'
+    console.log('Game finished')
+    console.log(this.activePlayers[0].hand.cards)
+  }
+  private printCommonCards(): void {
+    this.commonCards.forEach((card) => {
+      card.print()
+    })
   }
 }

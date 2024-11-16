@@ -17,7 +17,6 @@ export class Player {
     this.printPayerHand()
   }
   public play(commonCards: Card[]): PlayerMove {
-    // do something
     const move = this.ai.getMove(commonCards, this.hand.cards)
     if (move === 'fold') {
       this.status = 'folded'
@@ -33,5 +32,4 @@ export class Player {
       card.print()
     })
   }
-  // console.log(`${this.name} : ${this.hand.cards.forEach((c) => c.print())}`!!!)
 }
